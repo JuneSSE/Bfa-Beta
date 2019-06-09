@@ -6641,7 +6641,13 @@ qcPinDB = {
 	},
 	[1203] = {--[[ Battle For Darkshore ]]--
 	},
+	[1345] = {--[[ Crucible of Storms ]]--
+	},
+	[1346] = {--[[ Crucible of Storms ]]--
+	},
 	[1355] = {--[[ Nazjatar ]]--
+	},
+	[1363] = {--[[ Crucible of Storms ]]--
 	},
 	[1462] = {--[[ Mechagon Island ]]--
 	},
@@ -6650,5 +6656,7 @@ qcPinDB = {
 	[1473] = {--[[ Chamber Of Heart ]]--
 	},
 	[1490] = {--[[ Mechagon ]]--
+	},
+	[1524] = {--[[ Deepsea Slave Pen ]]--
 	},
 	}

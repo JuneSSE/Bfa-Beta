@@ -110,6 +110,7 @@ qcLocalize = {
 	HERBALISM = "Herbalism",
 	HIDECOMPLETEDQUESTS = "Hide Completed Quests",
 	HIDEWORLDQUEST = "Hide World Quests",
+	WORLDQUEST = "World Quests",
 	HIDEDAILYANDWORLD = "Hide Daily and World Quests",
 	HIDEINPROGRESSQUESTS = "Hide In-Progress Quests",
 	HIDELOWLEVELQUESTS = "Hide Low Level Quests",
@@ -440,5 +441,6 @@ qcLocalize = {
 	ISLANDEXPEDITIONS = "Island Expeditions",
 	CLASSCAMPAINS = "Class Campains",
 	TERRACEOFENLESSSPRINGS = "Terrace Of Endless Spring",
-	Temp = "Temp",
+	TEMP = "Temp",
+	PLAYERVSPLAYER = "Player Vs Player",
 	}
