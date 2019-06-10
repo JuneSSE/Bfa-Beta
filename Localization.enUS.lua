@@ -443,4 +443,6 @@ qcLocalize = {
 	TERRACEOFENLESSSPRINGS = "Terrace Of Endless Spring",
 	TEMP = "Temp",
 	PLAYERVSPLAYER = "Player Vs Player",
+	HERITAGE = "Heritage",
+	RATEDPVP = "Rated Pvp",
 	}
