@@ -24,7 +24,7 @@ local qcNewDataAlertTooltip = nil
 local qcMutuallyExclusiveAlertTooltip = nil
 
 --[[ Constants ]]--
-local QCADDON_VERSION = 109.23
+local QCADDON_VERSION = 109.24
 local QCADDON_PURGE = true
 local QCDEBUG_MODE = false
 local QCADDON_CHAT_TITLE = "|CFF9482C9Quest Completist:|r "
@@ -1202,28 +1202,7 @@ local function qcRefreshPins(uimapId, mapLevel)
 			end
 		end
 	end
-	
-	--[[WORLDQUEST ]]--
---	if (qcSettings["QC_ML_HIDE_WORLDQUEST"] == 1) then
---		for i = #qcPins, 1, -1 do
---			for qcQuestIndex = #qcPins[i][7], 1, -1 do
---				local qcQuestID = qcPins[i][7][qcQuestIndex]
---				local _S, qcCurrentPlayerRace = UnitRace("player")
---				local qcCurrentRace = qcRaceBits[string.upper(qcCurrentPlayerRace)]
---				local _S, qcCurrentPlayerClass = UnitClass("player")
---				local qcCurrentClass = qcClassBits[string.upper(qcCurrentPlayerClass)]
---				if (qcQuestDatabase[qcQuestID]) and (BitBand(qcQuestDatabase[qcQuestID][8], qcCurrentRace) == 0) then
---					TableRemove(qcPins[i][7], qcQuestIndex)
---				elseif (qcQuestDatabase[qcQuestID]) and (BitBand(qcQuestDatabase[qcQuestID][9], qcCurrentClass) == 0) then
---					TableRemove(qcPins[i][7], qcQuestIndex)
---				end
---			end
---			if (#qcPins[i][7] == 0) then
---				TableRemove(qcPins, i)
---			end
---		end
---	end
-	
+
 	--[[ In progress ]]--
 	if (qcSettings["QC_M_HIDE_INPROGRESS"] == 1) then
 		for i = #qcPins, 1, -1 do
@@ -1288,7 +1267,7 @@ function qcInterfaceOptions_OnShow(self)
     qcConfigTitle:SetText(qcL.CONFIGTITLE)
 
     qcConfigSubtitle = self:CreateFontString("qcConfigSubtitle", "ARTWORK", "GameFontHighlightSmall")
-    qcConfigSubtitle:SetHeight(22)
+    qcConfigSubtitle:SetHeight(22) -- Hight from top to put the checkbox in filters
     qcConfigSubtitle:SetPoint("TOPLEFT", qcConfigTitle, "BOTTOMLEFT", 0, -8)
     qcConfigSubtitle:SetPoint("RIGHT", self, -32, 0)
     qcConfigSubtitle:SetNonSpaceWrap(true)
@@ -1344,6 +1323,18 @@ function qcInterfaceOptions_OnShow(self)
 		end
 	end)
 
+--diabled whit line 1548 ->1552 getting behind other filter
+--	qcIO_M_HIDE_WORLDQUEST = CreateFrame("CheckButton", "qcIO_M_HIDE_WORLDQUEST", self, "InterfaceOptionsCheckButtonTemplate")
+--    qcIO_M_HIDE_WORLDQUEST:SetPoint("TOPLEFT", qcIO_M_HIDE_LOWLEVEL, "BOTTOMLEFT", 0, 0)
+--	_G[qcIO_M_HIDE_WORLDQUEST:GetName().."Text"]:SetText(qcL.HIDEWORLDQUEST)
+--	qcIO_M_HIDE_WORLDQUEST:SetScript("OnClick", function(self)
+--		if (qcIO_M_HIDE_WORLDQUEST:GetChecked() == false) then
+--			qcSettings.QC_M_HIDE_WORLDQUEST = 0
+--		else
+--			qcSettings.QC_M_HIDE_WORLDQUEST = 1
+--		end
+--	end)
+
 	qcIO_M_HIDE_SEASONAL = CreateFrame("CheckButton", "qcIO_M_HIDE_SEASONAL", self, "InterfaceOptionsCheckButtonTemplate")
     qcIO_M_HIDE_SEASONAL:SetPoint("TOPLEFT", qcIO_M_HIDE_PROFESSION, "BOTTOMLEFT", 0, 0)
 	_G[qcIO_M_HIDE_SEASONAL:GetName().."Text"]:SetText(qcL.HIDENONACTIVESEASONALQUESTS)
@@ -1365,7 +1356,7 @@ function qcInterfaceOptions_OnShow(self)
 			qcSettings.QC_M_HIDE_INPROGRESS = 1
 		end
 	end)
-	
+
 --- Quest List Filters Start ---
     qcListFiltersTitle = self:CreateFontString("qcListFiltersTitle", "ARTWORK", "GameFontNormal")
     qcListFiltersTitle:SetPoint("TOPLEFT", qcConfigSubtitle, "BOTTOMLEFT", 16, -185)
@@ -1403,15 +1394,16 @@ function qcInterfaceOptions_OnShow(self)
 			qcSettings.QC_L_HIDE_PROFESSION = 1
 		end
 	end)
-	
+
+--diabled whit line 1578 ->1582 getting behind other filter
 	--qcIO_L_HIDE_WORLDQUEST = CreateFrame("CheckButton", "qcIO_L_HIDE_WORLDQUEST", self, "InterfaceOptionsCheckButtonTemplate")
-    --qcIO_L_HIDE_WORLDQUEST:SetPoint("TOPLEFT", qcIO_L_HIDE_WORLDQUEST, "BOTTOMLEFT", 0, 0)
-	--  _G[qcIO_L_HIDE_WORLDQUEST:GetName().."Text"]:SetText(qcL.HIDEWORLDQUEST .. COLOUR_DEATHKNIGHT .. " (Not Yet Implemented)")
-	--  qcIO_L_HIDE_WORLDQUEST:SetScript("OnClick", function(self)
-    --  if (qcIO_L_HIDE_WORLDQUEST:GetChecked() == false) then
-	--	qcSettings.QC_L_HIDE_WORLDQUEST = 0
+   -- qcIO_L_HIDE_WORLDQUEST:SetPoint("TOPLEFT", qcIO_L_HIDE_LOWLEVEL, "BOTTOMLEFT", 0, 0)
+	--_G[qcIO_L_HIDE_WORLDQUEST:GetName().."Text"]:SetText(qcL.HIDEWORLDQUEST .. COLOUR_DEATHKNIGHT .. " (Not Yet Implemented)")
+	--qcIO_L_HIDE_WORLDQUEST:SetScript("OnClick", function(self)
+	--	if (qcIO_L_HIDE_WORLDQUEST:GetChecked() == false) then
+	--		qcSettings.QC_L_HIDE_WORLDQUEST = 0
 	--	else
-	--	qcSettings.QC_L_HIDE_WORLDQUEST = 1
+	--		qcSettings.QC_L_HIDE_WORLDQUEST = 1
 	--	end
 	--end)
 
@@ -1495,6 +1487,9 @@ local function qcCheckSettings()
 	if (qcSettings.QC_M_HIDE_PROFESSION == nil) then --[[ 0:No, 1:Yes ]]--
 		qcSettings.QC_M_HIDE_PROFESSION = 1
 	end
+	if (qcSettings.QC_M_HIDE_WORLDQUEST == nil) then --[[ 0:No, 1:Yes ]]--
+		qcSettings.QC_M_HIDE_WORLDQUEST = 1
+	end
 	if (qcSettings.QC_M_HIDE_SEASONAL == nil) then --[[ 0:No, 1:Yes ]]--
 		qcSettings.QC_M_HIDE_SEASONAL = 1
 	end
@@ -1550,6 +1545,11 @@ local function qcApplySettings()
 	else
 		qcIO_M_HIDE_PROFESSION:SetChecked(true)
 	end
+--	if (qcSettings.QC_M_HIDE_WORLDQUEST == 0) then
+--		qcIO_M_HIDE_WORLDQUEST:SetChecked(false)
+--	else
+--		qcIO_M_HIDE_WORLDQUEST:SetChecked(true)
+--	end
 	if (qcSettings.QC_M_HIDE_SEASONAL == 0) then
 		qcIO_M_HIDE_SEASONAL:SetChecked(false)
 	else
@@ -1575,11 +1575,12 @@ local function qcApplySettings()
 	else
 		qcIO_L_HIDE_PROFESSION:SetChecked(true)
 	end
---	if (qcSettings.QC_L_HIDE_WORLDQUEST == 0) then
---		qcIO_L_HIDE_WORLDQUEST:SetChecked(false)
---	else
---		qcIO_L_HIDE_WORLDQUEST:SetChecked(true)
---	end
+	--if (qcSettings.QC_L_HIDE_WORLDQUEST == 0) then
+	--	qcIO_L_HIDE_WORLDQUEST:SetChecked(false)
+	--else
+	--	qcIO_L_HIDE_WORLDQUEST:SetChecked(true)
+	--end
+
 	if (qcSettings.QC_ML_HIDE_FACTION == 0) then
 		qcIO_ML_HIDE_FACTION:SetChecked(false)
 	else
@@ -1643,10 +1644,11 @@ local function qcEventHandler(self, event, ...)
 			qcUpdateMutuallyExclusiveCompletedQuest(qcQuestID)
 			qcUpdateSkippedBreadcrumbQuest(qcQuestID)
 			qcUpdateQuestList(nil, qcMenuSlider:GetValue())
+			
 		end
 	elseif (event == "PLAYER_ENTERING_WORLD") then
-	  qcQuestQueryCompleted()
-		qcZoneChangedNewArea()
+			qcQuestQueryCompleted()
+			qcZoneChangedNewArea()
 	elseif (event == "ADDON_LOADED") then
 		if (... == "QuestCompletist") then
 			if not (qcCompletedQuests) then qcCompletedQuests = {} end

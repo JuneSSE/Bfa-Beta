@@ -437,7 +437,10 @@ qcLocalize = {
 	ISLANDEXPEDITIONS = "Island Expeditions",
 	CLASSCAMPAINS = "Class Campains",
 	TERRACEOFENLESSSPRINGS = "Terrace Of Endless Spring",
-	Temp = "Temp",
+	TEMP = "Temp",
+	PLAYERVSPLAYER = "Player Vs Player",
+	HERITAGE = "Heritage",
+	RATEDPVP = "Rated Pvp",
 }
 
 end
