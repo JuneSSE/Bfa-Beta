@@ -6656,6 +6656,8 @@ qcPinDB = {
 	[1473] = {--[[ Chamber Of Heart ]]--
 	},
 	[1490] = {--[[ Mechagon ]]--
+	},	
+	[1499] = {--[[ Zin-Azshari ]]--
 	},
 	[1524] = {--[[ Deepsea Slave Pen ]]--
 	},
